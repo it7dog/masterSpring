@@ -16,3 +16,13 @@
  Class findSystemClass(String name):从本地文件系统载入Class文件。<br/>
  Class findLoadedClass(String name):调用该方法来查看ClassLoader是否已装入某个类；<br/>
  ClassLoader getParent(): 获取类装载器的父装载器。<br/>
+ 
+ java反射机制：<br/>
+ Constructor:类的构造函数反射类，通过Class#getConstructor()方法可以获取类的所有构造函数
+ 函数反射对象数组。Constructor的一个主要方法是newInstance，通过该方法可以创建一个对象类的实例。<br/>
+ Method:类方法的反射类，通过Class#getDeclaredMethods()方法可以获取类的所有方法反射类对象数组Method[].
+ Method最主要的方法invoke(Object obj,Object[] args),其中obj表示操作的目标对象；args为方法入参。<br/>
+ Field:类的成员变量的反射，通过Class#getDeclaredFields()方法可以获取类的成员变量反射对象数组，Field类
+ 最主要的方法是set(Object obj,Object value),其中obj表示操作的目标对象，通过value为目标对象的成员变量
+ 设置值。<br/>
+ 
