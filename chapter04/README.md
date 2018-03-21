@@ -41,3 +41,11 @@ FileSystemResource:文件系统资源，资源以文件系统路径的方式表�
 InputStreamResource:以输入流返回表示的资源。<br/>
 PathResource:Spring4.0提供的读取资源文件的新类。<br/>
  
+ 资源加载<br/>
+ Spring定义了一套资源加载的接口，并提供了实现类。ResourceLoader接口仅有一个getResource(String location)
+ 方法，可以根据一个地址加载文件资源。<br/>
+ 
+ BeanFactory和ApplicationContext<br/>
+ BeanFactory一般被称为IoC容器，ApplicationContext称为应用上下文；<br/>
+ BeanFactory是Spring框架的基础设施，面向Spring本身，ApplicationContext面向使用Spring框架的开发者，几乎
+ 所有的应用场合都可以直接使用ApplicationContext而非底层的BeanFactory<br/>
