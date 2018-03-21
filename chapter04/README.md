@@ -26,3 +26,18 @@
  最主要的方法是set(Object obj,Object value),其中obj表示操作的目标对象，通过value为目标对象的成员变量
  设置值。<br/>
  
+ 资源抽象接口<br/>
+ spring设计了一个Resource接口，他为应用提供了更强的底层资源访问能力。主要方法：<br/>
+ boolean exists():资源是否存在<br/>
+ boolean isOpen():资源是否打开<br/>
+ URL getURL() throws IOException:如果底层资源可以表示成URL，则该方法返回对应的URL对象。<br/>
+ File getFile() throws IOException:如果底层资源对应一个文件，则该方法返回一个对应的File对象。<br/>
+ InputStream getInputStream() throws IOException:返回资源对应的输入流。<br/>
+ Resource具体实现类：<br/>
+WritableResource：可写资源接口，是Spring3.1版本新加的接口，有两个实现类，既FileSystemResource和
+PathResource,其中PathResource是spring4.0提供的实现类。<br/>
+ClassPathResource：类路径下的资源，资源以相对路径的方式表示。<br/>
+FileSystemResource:文件系统资源，资源以文件系统路径的方式表示。 <br/>
+InputStreamResource:以输入流返回表示的资源。<br/>
+PathResource:Spring4.0提供的读取资源文件的新类。<br/>
+ 
