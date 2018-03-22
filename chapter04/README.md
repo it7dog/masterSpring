@@ -53,5 +53,11 @@ PathResource:Spring4.0提供的读取资源文件的新类。<br/>
  ApplicationContext主要实现类是ClassPathXmlApplicationContext和FileSystemXmlApplicationContext
  ,前者默认从类路径加载配置文件，后者默认从文件系统中装载配置文件。<br/>
  和BeanFactory初始化相似，APPlicationContext的初始化也很简单，如果文件放置在类路径下，则可以优先考虑使用ClassPathXmlApplicationContext实现类。<br/>
- ApplicationContext ctx = new ClassPathXmlApplicationContext("com/smart/context/beans.xml")
- 对于ClassPathXmlApplicationContext来说，"com/smart/context/beans.xml"等同于"classpath:com/smart/context/beans.xml"。
+ ApplicationContext ctx = new ClassPathXmlApplicationContext("com/smart/context/beans.xml")<br/>
+ 对于ClassPathXmlApplicationContext来说，"com/smart/context/beans.xml"等同于"classpath:com/smart/context/beans.xml"。<br/>
+ 如果配置文件放置在文件系统的路径下，则可以优先考虑使用FileSystemXmlApplicationContext实现类。<br/>
+ ApplicationContext ctx = new FileSystemXmlApplicationContext("com/smart/context/beans.xml");<br/>
+ 对于FileSystemXmlApplicationContext来说，"com/smart/context/beans.xml"等同于"file:com/smart/context/beans.xml"<br/>
+ 还可以指定一组配置文件，Spring会自动将多个配置文件在内存中"整合"成一个配置文件，如下：
+ ApplicationContext ctx = new ClassPathXmlApplicationContext(new String[]{"conf/beans1.xml","conf/beans2.xml"});<br/>
+
