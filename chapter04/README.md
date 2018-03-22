@@ -49,3 +49,6 @@ PathResource:Spring4.0提供的读取资源文件的新类。<br/>
  BeanFactory一般被称为IoC容器，ApplicationContext称为应用上下文；<br/>
  BeanFactory是Spring框架的基础设施，面向Spring本身，ApplicationContext面向使用Spring框架的开发者，几乎
  所有的应用场合都可以直接使用ApplicationContext而非底层的BeanFactory<br/>
+ 
+ ApplicationContext主要实现类是ClassPathXmlApplicationContext和FileSystemXmlApplicationContext
+ ,前者默认从类路径加载配置文件，后者默认从文件系统中装载配置文件。<br/>
