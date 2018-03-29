@@ -141,3 +141,135 @@ boss的bean通过<ref>元素引用car Bean,建立起boss对car的依赖。
 <bean id="car" class="com.smart.attr.Car">
     <property name="brand"><null/></property>
 </bean>
+5、级联属性
+<bean id="boss3" class="com.smart.attr.Boss">
+    <property name="car.brand" value="吉利CT50" />
+</bean>
+按照上面的配置，Spring将调用Boss.getCar().setBean("吉利CT50")进行属性的注入操作。这时必须对Boss类进行改造，为car属性声明一个初始化对象。
+public class Boss{
+ private Car car = new Car();
+ public Car getCar(){
+       return car;
+  }
+  public void setCar(Car car){
+   this.car=car;
+  }
+ }
+}
+6、集合类型属性
+List：
+public class Boss{
+    private List favorites = new ArrayList();
+    public List getFavorites(){
+        return List;
+    }
+    public void setFavorites(List favorites){
+        this.favorites=favorites;
+    }
+}
+对应的Spring中的属性配置片段
+<bean id="boos1" class="com.smart.attr.Boss">
+    <property name="favorites">
+        <list>
+            <value>看报</value>
+            <value>赛车</value>
+            <value>高尔夫</value>
+        </list>
+    </property>
+</bean>
+Set:
+<bean id="boos1" class="com.smart.attr.Boss">
+    <property name="favorites">
+        <set>
+            <value>看报</value>
+            <value>赛车</value>
+            <value>高尔夫</value>
+        </set>
+    </property>
+</bean>
+Map:
+下面为Boss添加一个Map类型的jobs属性
+public class Boss{
+    private Map jobs = new HashMap();
+    public Map getJobs(){
+        return jobs;
+    }
+    public void setJobs(Map jobs){
+        this.jobs=jobs;
+    }
+}
+在配置文件中可以通过以下方式为jobs属性提供配置值：
+<bean id="boss1" class="com.smart.attr.Boss">
+    <property name="jobs">
+        <map>
+         <entry>
+            <key><value>AM</value></key>
+            <value>会见客户</value>
+         </entry>
+         <entry>
+           <key><value>PM</value></key>
+           <value>公司内部会议</value>
+         </entry>
+        </map>
+    </property>
+</bean>
+Properties
+properties类型是Map类型的特例。Map元素的键和值可以是任何类型的对象，而Properties属性的键和值只能是字符串。
+public class Boss{
+    private Properties mails = new Properties();
+    public Properties getMails(){
+     return mails;
+    }
+    public void setMails(Properties mails){
+     this.mails = mails;
+    }
+}
+配置：
+<bean id="boss1" class="com.smart.attr.Boss">
+    <property name="mails">
+        <props>
+         <prop key="jobMail">john-office@smart.com</prop>
+         <prop key="lifeMail">john-life@smart.com</prop>
+        </props>
+    </property>
+</bean>
+强类型集合
+public class Boss {
+    private Map<String,Integer> jobTime = new HashMap<String,Integer>();
+    public Map<String,Integer> getJobTime(){
+        return jobTime();
+    }
+    public void setJobTime(Map<String,Integer> jobTime){
+        this.jobTime=jobTime;
+    }
+}
+<bean id="boss1" class="com.smart.attr.Boss">
+ <property name="jobTime">
+  <map>
+   <entry>
+    <key><value>会见客户</value></key>
+    <value>124</value>
+   </entry>
+  </map>
+ </property>
+</bean>
+集合合并
+Spring支持集合合并的功能，允许子<bean>继承父<beab>的同名属性集合元素，并将子<bean>中配置的集合属性和父<bean>中配置的同名属性值合并起来
+作为最终Bean的属性值。
+<bean id="parentBoss" abstract="true" class="com.smart.attr.Boss">
+    <property name="favorites">
+        <set>
+         <value>看报</value>
+         <value>赛车</value>
+         <value>高尔夫</value>
+        </set>
+    </property>
+</bean>
+<bean id="childBoss" parent="parentBoss">
+    <property name="favorites">
+        <set merge="true">
+            <value>爬山</value>
+            <value>游泳</value>
+        </set>
+    </property>
+</bean>
