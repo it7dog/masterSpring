@@ -115,3 +115,29 @@ public class CarFactory{
 <property name="brand">
 <value>红旗&amp;CA72</value>
 <property>
+2、引用其他Bean
+public class Boss {
+    private Car car;
+    public void setCar(Car car){
+        this.car = car;
+    }
+}
+boss的bean通过<ref>元素引用car Bean,建立起boss对car的依赖。
+<bean id="car" class="com.smart.attr.Car" />
+<bean id="boss" class="com.smart.attr.Boss">
+ <!--引用上面定义的car Bean-->
+  <ref bean="car"></ref>
+</bean>
+3、内部Bean
+<bean id="boss" class="com.smart.attr.Boss">
+    <property name="car">
+        <bean class="com.smart.attr.Car">
+            <property name="maxSpeed" value="200" />
+            <property name="price" value="2000.00" />
+        </bean>
+    </property>
+</bean>
+4、null值
+<bean id="car" class="com.smart.attr.Car">
+    <property name="brand"><null/></property>
+</bean>
