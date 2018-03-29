@@ -99,3 +99,19 @@ public class CarFactory{
 当使用静态工厂类型的方法后，用户就无须在配置文件定义工厂类的Bean，只需按以下方式进行配置即可：
 <bean id="car6" class="com.smart.ditype.CarFactory" factory-method="createHongQiCar" />
 直接在<bean>中通过class属性指定工厂类，然后再通过factory-method指定对应的工厂方法。
+
+注入参数详解
+1、字面值一般指可用字符串表示的值，这些值可以通过<value>元素标签进行注入。在默认情况下，基本数据类型及其封装类、String等类型都可以采用字面值注入的方式。
+<bean id="car" class="com.smart.attr.Car">
+ <property name="maxSpeed">
+    <value>200</value>
+ </property>
+ <property name="brand">
+    <value><![CDATA[红旗&CA72]]></value>
+ </property>
+</bean>
+<![CDATA[]]的作用是让XML解析器将标签中的字符串当做普通的文本对待。
+使用转义可以表示为
+<property name="brand">
+<value>红旗&amp;CA72</value>
+<property>
