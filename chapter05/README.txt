@@ -273,3 +273,59 @@ Spring支持集合合并的功能，允许子<bean>继承父<beab>的同名属�
         </set>
     </property>
 </bean>
+简化配置方式
+为了简化xml文件的配置，越来越多的XMl文件采用属性而非子元素配置信息。Spring从2.5版本开始引入一个新的p命名空间。可以通过<bean>元素属性的方式配置bean的属性。
+<?xml version="1.0" encoding="UTF-8">
+<beans xmlns="" >
+    <bean id="car" class="com.smart.ditype.Car">
+        <property name="brand" value="红旗&amp;CA72" />
+        <property name="maxSpeed" vallue="2000" />
+        <property name="price" value="200000" />
+    </bean>
+</beans>
+使用p命名空间后
+<?xml version="1.0" encoding="UTF-8">
+<beans xmlns=""
+    xmlns="http://www.springframework.com/schema/p" // 生命p命名空间
+>
+    <bean id="car" class="com.smart.ditype.Car"
+        p:brand="红旗&amp;CA72"
+        p:maxSpeed="200"
+        p:price="200000.00"
+    />
+    <bean id="boss" class="coom.smart.ditype.Boss"
+     p:car-ref="car" />
+</beans>
+
+未采用p命名空间前，<bean>使用<property>子元素配置Bean的属性，采用p命名空间后，采用<bean>的元素属性配置Bean的属性。
+
+对于字面属性，其格式为：
+p:<属性名>="xxx"
+对于引用对象的属性，其格式为：
+p:<属性名>-ref="xxx"
+
+<bean>之间的关系
+1、继承
+<bean id=abstractcar" class="com.smart.tagdepend.Car"
+  p:brand="红旗CA72" p:price="2000.00" p:color="黑色" abstract="true" />
+
+<bean id="car3" p:color="红色" parent="abstractcar" />
+<bean id="car4" p:color="白色" parent="abstractcar" />
+2、依赖
+一般情况下，可以使用<ref>元素标签建立对其他Bean的依赖关系，Spring负责管理这些Bean的关系。当实例化一个Bean时，Spring保证该Bean所依赖的其他Bean已经初始化。
+Spring允许用户通过depends-on属性显示指定Bean前置依赖的Bean，前置依赖的Bean会在本Bean实例化之前创建好。
+<bean id="manager" class="com.smart.tagdepend.CacheManager" depends-on="sysInit" />
+<bean id="sysInit" class="com.smart.tagdepend.SysInit" />
+3、引用
+<bean id="car" class="com.smart.tagdepend.Car" />
+<bean id="boss" class="com.smart.tagdepend.Boss" p:car="car" scope="prototype" />
+Spring提供了一个<idref>元素标签，可以通过<idref>引用另一个<bean>的名字。在容器启动时，Spring负责检查引用关系的正确性，这样就可以提前发现错误，
+<bean id="car" class="com.smart.tagdepend.Car" />
+<bean id="boss" class="com.smart.tagdepend.Boss">
+ <property name="carId">
+    <idref bean="car" />
+ </property>
+</bean>
+
+
+
