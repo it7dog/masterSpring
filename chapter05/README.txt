@@ -327,5 +327,148 @@ Spring提供了一个<idref>元素标签，可以通过<idref>引用另一个<be
  </property>
 </bean>
 
+整合多个配置文件
+<import resource="classpath:com/smart/impt/beans1.xml" />
+<bean id="boss1" class="com.smart.fb.Boss" p:name="John" p:car-ref="car1" />
+<bean id="boss2" class="com.smart.fb.Boss" p:name="John" p:car-ref="car2" />
+假设已经在beans1.xml中配置了car1和car2的Bean,通过import的resource属性引入beans1.xml，beans2.xml就拥有了完整的配置信息，Spring容器仅需通过beans2.xml
+就可以加载所有的配置信息。
+
+Bean作用域
+1、singleton作用域
+单利模式是重要的设计模式之一。一般无状态或者状态不可变的类适合使用单例模式。在spring中，大部分Bean都能已单例的方式运行，spring的Bean默认作用域为singleton
+<bean id="car" class="com.smart.scope.car" scope="singleton" />
+<bean id="boss1" class="com.smart.scope.Boss" p:car-ref="car" />
+<bean id="boss2" class="com.smart.scope.Boss" p:car-ref="car" />
+<bean id="boss3" class="com.smart.scope.Boss" p:car-ref="car" />
+boss1、boss2和boss3的car属性都指向同一个Bean
+2、prototype作用域
+<bean id="car" class="com.smart.scope.Car" scope="prototpye" />
+<bean id="boss1" class="com.smart.scope.Boss" p:car-ref="car" />
+<bean id="boss2" class="com.smart.scope.Boss" p:car-ref="car" />
+<bean id="boss3" class="com.smart.scope.Boss" p:car-ref="car" />
+boss1、boss2和boss3所引用的都是一个新的carsih实例。
+
+基于注解的配置
+1、使用注解定义Bean
+使用注解定义一个DAO的Bean
+package com.smart.anno;
+import org.springframework.stereotype.Component;
+@Component("userDao")
+public class UserDao{
+   ...
+}
+使用@Component注解在UserDao类声明处对类进行标注，它可以被Spring容器识别，Spring容器自动将POJO转换为容器管理的Bean。
+它和XML配置时等效的：
+<bean id="userDao" class="com.smart.anno.UserDao" />
+除@Component外，Spring还提供了3个基本和@Component等效的注解，分别用于对DAO、Service及Web层的Controller进行注解。
+@Repository:用于对DAO实现类进行标注；
+@Service:用于对Service实现类进行标注。
+@Controller:用于对Controller实现类进行标注。
+之所以要在@Component之外提供这3个特殊的注解，是为了让标注类本身的用途清晰化，完全可以用@Component替代这3个特殊的注解。（不推荐）
+2、扫描注解定义的Bean
+Spring提供了一个context命名空间，她提供了通过扫描类包以应用注解定义Bean的方式。
+<?xml version="1.0" encoding="UTF-8" ?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd">
+
+  <!-- 扫描类包以应用注解定义的Bean-->
+  <context:component-scan base-package="com.smart.anno" />
+</beans>
+通过context命名空间的component-scan的base-package属性指定一个需要扫描的基类包，Spring容器将会扫描这个基类包里的所有类，并从类的注解信息中获取Bean的定义信息。
+如果仅希望扫描特定的类而非基包下所有的类，那么可以使用resource-pattern属性过滤出特定的类，如下：
+<context:component-scan base-package="com.smart" resource-pattern="anno/*.class" />
+这里讲基包设置为com.smart；默认情况下，resource-pattern属性为"**/*.class"，即基类包里的所有类；将其设置为"anno/*.class"，则Spring仅会扫描基类包里
+anno子包中的类。
+
+<context:component-scan base-package="com.smart.anno" >
+ <context:include-filter type="regex" expression="com\.smart\.anno.*" />
+ <context:exlude-filter type="aspectjs" expression="com.smart..*Controller+" />
+</context:component-scan>
+<context:include-filter>表示要包含的目标类
+<context:exclude-filter>表示要排除的目标类
+aspetj的过滤表达能力是最强的，它可以轻松实现其他类型所能表达的过滤规则。
+
+自动装配Bean
+1、使用@Autowired进行自动注入
+Spring通过@Autowired注解实现Bean的依赖注入。
+package com.smart.anno;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+@Service
+public class LogonService{
+  // 分别注入LogDao及UserDao的Bean
+  @Autowired
+  private LogDao logDao;
+  @Autowired
+  private UserDao userDao;
+  ....
+}
+使用@Service将LogonService标注为一个Bean
+通过@Autowired注入LogDao及UserDao的Bean
+@Autowired默认按类型（byType）匹配的方式在容器中查找匹配的Bean，当有且仅有一个匹配的Bean时，Spring将其注入@Autowired标注的变量中。
+2、使用@Autowired的required属性
+如果容器中没有一个和标注变量匹配的Bean,那么Spring容器启动时将报NoSuchBeanDefinitionException异常。如果希望Spring及时找不到匹配的Bean完成注入也不要
+抛出异常，那么可以使用@Autowired(required=false)进行标注。
+@Service
+public class LogonService{
+ @Autowired(required=false)
+ private LogDao logDao;
+ ....
+}
+3、使用@Qualifier指定注入Bean的名称
+如果容器中有一个以上匹配的Bean时，则可以通过@Qualifier注解限定Bean的名称
+package com.smart.anno;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service
+
+@Service
+public class LogonService {
+    @Autowired
+    private LogDao logDao
+
+    @Autowired
+    @Qualifier("userDao")
+    private UserDao userDao;
+}
+这时，假设容器有两个类型为UserDao的Bean,一个名为userDao,另一个名为otherUserDao，则会注入名为uesrDao的Bean。
+
+4、对类方法进行标注
+@Autowired可以对类成员变量及方法的入参进行标注。
+package com.smart.anno;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+
+@Service
+public class LogService{
+    private LogDao logDao;
+    private UserDao userDao;
+
+    @Autowired
+    public void setLogDao(LogDao logDao){
+     this.logDao = logDao;
+    }
+
+    @Autowired
+    @Qualifier("userDao")
+    public void setUserDao(UserDao userDao){
+     this.userDao=userDao;
+    }
+]
+
+@Autowired
+public void init(@Qualifier("userDao")UserDao userDao,LogDao logDao){
+  this.userDao=userDao;
+  this.logDao=logDao;
+}
+UserDao的入参注入名为userDao的Bean，而LogDao的入参注入LogDao类型的Bean。
 
 
