@@ -1,11 +1,11 @@
-#####Bean的基本配置
+##### Bean的基本配置
 
 * Spring支持两种依赖注入方式，分别为属性注入和构造函数注入。除此之外,spring还支持工厂方法注入方式。
  
 
-######属性注入 
+###### 属性注入 
 * 属性注入是指通过setXxx()方法注入Bean的属性值或依赖对象。在实际应用中最长采用的注入方式。
-######构造函数注入
+###### 构造函数注入
 * 构造函数注入是除属性注入外的另一种常用的注入方式，它能保证一些必要的属性在Bean实例化时就得到设置，确保Bean在实例化后就可以使用。  
 1.按类型匹配入参  
     ```
@@ -125,7 +125,7 @@ public class CarFactory{
     <bean id="car6" class="com.smart.ditype.CarFactory" factory-method="createHongQiCar" />
 直接在<bean>中通过class属性指定工厂类，然后再通过factory-method指定对应的工厂方法。
 
-######注入参数详解
+###### 注入参数详解
 * 字面值一般指可用字符串表示的值，这些值可以通过<value>元素标签进行注入。在默认情况下，基本数据类型及其封装类、String等类型都可以采用字面值注入的方式。
 >
 
@@ -341,7 +341,7 @@ Spring支持集合合并的功能，允许子<bean>继承父<bean>的同名属�
     </property>
 </bean>
 ```
-######简化配置方式
+###### 简化配置方式
 为了简化xml文件的配置，越来越多的XMl文件采用属性而非子元素配置信息。Spring从2.5版本开始引入一个新的p命名空间。可以通过<bean>元素属性的方式配置bean的属性。
 ```
 <?xml version="1.0" encoding="UTF-8">
@@ -375,7 +375,7 @@ Spring支持集合合并的功能，允许子<bean>继承父<bean>的同名属�
     对于引用对象的属性，其格式为：
     p:<属性名>-ref="xxx"
 
-######\<bean>之间的关系
+###### \<bean>之间的关系
 * 继承
 ```
 <bean id=abstractcar" class="com.smart.tagdepend.Car"
@@ -408,7 +408,7 @@ Spring提供了一个<idref>元素标签，可以通过<idref>引用另一个<be
  </property>
 </bean>
 ```
-######整合多个配置文件
+###### 整合多个配置文件
 ```
 <import resource="classpath:com/smart/impt/beans1.xml" />
 <bean id="boss1" class="com.smart.fb.Boss" p:name="John" p:car-ref="car1" />
@@ -416,7 +416,7 @@ Spring提供了一个<idref>元素标签，可以通过<idref>引用另一个<be
 ```
 假设已经在beans1.xml中配置了car1和car2的Bean,通过import的resource属性引入beans1.xml，beans2.xml就拥有了完整的配置信息，Spring容器仅需通过beans2.xml
 就可以加载所有的配置信息。
-#####Bean作用域
+##### Bean作用域
 1.singleton作用域  
 单利模式是重要的设计模式之一。一般无状态或者状态不可变的类适合使用单例模式。在spring中，大部分Bean都能已单例的方式运行，spring的Bean默认作用域为singleton.
 ```
@@ -434,7 +434,7 @@ boss1、boss2和boss3的car属性都指向同一个Bean
 <bean id="boss3" class="com.smart.scope.Boss" p:car-ref="car" />
 ```
 boss1、boss2和boss3所引用的都是一个新的carsih实例。
-#####基于注解的配置
+##### 基于注解的配置
 * 使用注解定义Bean  
 > 使用注解定义一个DAO的Bean
 ```
@@ -492,7 +492,7 @@ anno子包中的类。
 \<context:exclude-filter>表示要排除的目标类  
  aspetj的过滤表达能力是最强的，它可以轻松实现其他类型所能表达的过滤规则。
  
- #####自动装配Bean
+ ##### 自动装配Bean
  
  1.使用@Autowired进行自动注入  
  Spring通过@Autowired注解实现Bean的依赖注入。  
