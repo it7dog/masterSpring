@@ -581,4 +581,62 @@ anno子包中的类。
  一般情况下，在spring容器中大部分Bean都是单例的，所以一般无须通过@Repository、@Service等注解的value属性为Bean指定名称，也无须使用@Qualifier
  注解按名称进行注入。
  
- 
+ 5.对集合类进行标注  
+ 如果对类中集合类的变量或方法入参进行@Autowired标注，那么Spring会将容器中类型匹配的所有Bean都自动注入进来。  
+```
+package com.smart.anno;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
+
+@Component
+public class MyComponent {
+    
+    //1、Spring会将容器中所有类型为Plugin的Bean注入这个变量中
+    @Autowired(required=false)
+    private List<Plugin> plugins;
+    
+    //2、将Plugin类型的Bean注入Map中
+    @Autowired
+    private Map<String,Plugin> pluginMaps;
+    
+    public List<Plugin> getPlugins(){
+        return plugins;
+    }
+}
+```
+Spring如果发现变量是一个List和一个Map集合类，则会将容器中匹配集合元素类型的所有Bean都注入进来。在2处将实现Plugin接口的Bean注入Map集合中，
+是Spring4.0提供的新特性。key是Bean的名字，value是所有实现了Plugin的Bean。  
+>
+6.对延迟依赖注入的支持  
+Spring4.0支持延迟依赖注入，即在Spring容器启动的时候，对于在Bean上标注@Lazy及@Autowired注解的属性，不会立即注入属性值，而是延迟到调用
+此属性的时候才会注入属性值。  
+```
+...
+@Lazy //此处需要标注延迟注解
+@Repository
+public class LogDao{
+}
+
+@Service
+public class LogonService implements BeanNameAware{
+
+    @Lazy //此处需要标注延迟注解
+    @Autowired(required=false)
+    public void setLogDao(LogDao logDao){...}
+}
+```
+对Bean实施延迟注入依赖，要注意@Lazy注解必须同时标注在属性及目标Bean上。
+
+######Bean作用范围及生命过程方法
+通过注解配置的Bean和通过<bean>配置的Bean一样，默认作用范围都是singleton。Spring为注解配置提供了一个@Scope注解，可以通过它显示指定
+Bean的作用范围。  
+>
+```
+...
+@Scope("prototype")
+@Component
+public class Car{
+    ...
+}
+```
