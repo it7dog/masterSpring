@@ -628,7 +628,7 @@ public class LogonService implements BeanNameAware{
 ```
 对Bean实施延迟注入依赖，要注意@Lazy注解必须同时标注在属性及目标Bean上。
 
-######Bean作用范围及生命过程方法
+###### Bean作用范围及生命过程方法
 通过注解配置的Bean和通过<bean>配置的Bean一样，默认作用范围都是singleton。Spring为注解配置提供了一个@Scope注解，可以通过它显示指定
 Bean的作用范围。  
 >
