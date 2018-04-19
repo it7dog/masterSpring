@@ -640,3 +640,96 @@ public class Car{
     ...
 }
 ```
+#####基于JAVA类的配置
+1.使用Java类提供Bean定义信息  
+
+JAVAConfig是Spring的一个子项目，它旨在通过Java类的方式提供Bean的定义信息。  
+普通的POJO只要标注@Configuration注解，就可以为Spring容器提供Bean定义的信息。每个标注了@Bean的类方法都相当于提供了一个Bean的定义信息。  
+
+```
+package com.smart.conf;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+//将一个POJO标注为定义Bean的配置类
+@Configuration
+public class AppCong{
+    
+    //2、两个方法定义了两个Bean，并提供了Bean的实例化逻辑
+    @Bean
+    public UserDao userDao(){
+        return new UserDao();
+    }
+    
+    @Bean
+    public LogDao logDao(){
+        return new LogDao();
+    }
+    //3、定义了logonService的Bean
+    @Bean
+    public LogonService logonService(){
+        LogonService logonService = new LogonService();
+        //4、定义的Bean注入logonService
+        logonService.setLogDao(logDao());
+        logonService.setUserDao(userDao());
+        return logonService;
+    }
+}
+```
+
+在AppConf类的定义处标注了@Configuration注解，说明这个类可用于为Spring提供Bean的定义信息。该类的方法可标注@Bean注解，Bean的类型由方法
+返回值的类型决定，名称默认和方法名相同，也可以通过入参显示指定Bean的名称，如@Bean(name="userDao"")。@Bean所标注的方法提供了Bean的实例化逻辑。
+@Bean所标注的方法提供了Bean的实例化逻辑。  
+
+在2处，userDao()和logDao()方法定义了一个UserDao和一个LogDao的Bean，他们的Bean名称分别为userDao和logDao。在3处，又定义了一个logonServie Bean,
+并且在4处注入在2处定义的两个人Bean,因此，以上配置和以下XML配置是等效的：
+```
+<bean id="userDao" class="com.smart.anno.UserDao" />
+<bean id="logDao" class="com.smart.anno.LogDao" />
+<bean id="logonService" class="com.smart.conf.LogonService" p:logDao-ref="userDao" p:userDao-ref="logDao" />
+```
+UserDao和LogDao这两个Bean在DaoConfig中定义，而logonServiceBean在ServiceConfig中定义，logonService Bean需要引用DaoConfig中
+定义的两个Bean。
+```
+package com.smart.conf;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class daoConfig{
+    @Bean
+    public UserDao userDao(){
+        return new UserDao();
+    }
+    @Bean
+    public LogDao logDao(){
+        return new LogDao();
+    }
+}
+```
+由于@Configuration注解类本身已经标注了@Component注解，所以任何标注了@Configuration的类，本身也相当于标注了@Component，即他们可以像普通
+的Bean一样被注入其他Bean中。DaoConfig标注了@Configuration注解后后就成为了一个Bean，它可以被自动注入ServiceConfig中，
+```
+package com.smart.conf;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.ImportResource;
+
+@Configuration
+public class ServiceConfig{
+
+@Autowired
+private DaoConfig daoConfig;
+
+@Bean
+public LogonService logonService(){
+    LogonService logonService = new LogonService();
+    
+    logonService.setLogDao(daoConfig.logDao());
+    logonService.serUserDao(daoConfig.userDao());
+    
+   return logonService;
+}
+}
+```
