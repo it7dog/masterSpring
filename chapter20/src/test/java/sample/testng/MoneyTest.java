@@ -15,7 +15,7 @@ public class MoneyTest {
         System.out.println("测试方法执行之前");
         f12CHF = 12;
         f14CHF=14;
-        f28USD=28;
+        f28USD=26;
 
     }
     @Test
