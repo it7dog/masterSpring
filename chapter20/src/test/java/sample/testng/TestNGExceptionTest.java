@@ -15,7 +15,7 @@ public class TestNGExceptionTest {
         user = null;
     }
 
-    @Test(enabled = true, expectedExceptions = IOException.class)
+    @Test(enabled = false, expectedExceptions = NullPointerException.class)
     public void testUser() {
         assertNotNull(user.getUserName());
     }
