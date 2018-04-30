@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns="http://www.springframework.org/schema/beans"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd ">
+
+
+    <bean name="user" class="cn.itcast.bean.User">
+        <property name="name" value="tom"></property>
+        <property name="age" value="18"></property>
+        <property name="car" ref="car"></property>
+    </bean>
+
+    <bean name="car" class="cn.itcast.bean.Car">
+        <property name="name" value="奔驰"></property>
+        <property name="color" value="黑色"></property>
+    </bean>
+
+    <bean name="user2" class="cn.itcast.bean.User">
+        <constructor-arg name="name" value="18" index="0" type="java.lang.Integer"></constructor-arg>
+        <constructor-arg name="car" ref="car"></constructor-arg>
+    </bean>
+
+    <bean name="user3" class="cn.itcast.bean.User" p:age="20" p:car-ref="car"></bean>
+
+    <bean name="user4" class="cn.itcast.bean.User">
+        <property name="name" value="#{user.name}"></property>
+        <property name="age" value="#{user3.age}"></property>
+        <property name="car" ref="car"></property>
+    </bean>
+
+    <bean name="cb" class="cn.itcast.injection.CollectionBean">
+        <property name="arr" value="tom"></property>
+    </bean>
+
+
+</beans>

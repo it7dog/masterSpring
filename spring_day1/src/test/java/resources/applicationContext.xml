@@ -13,21 +13,9 @@
 					名称不可重复.不能使用特殊字符.
 			结论: 尽量使用name属性.
 	  -->
-	<bean  name="user" class="cn.itcast.bean.User" >
-		<property name="name" value="tom" >
-		</property>
-		<property name="age" value="18"></property>
-	</bean>
-	<!-- 创建方式2：静态工厂创建
-	-->
+	<bean  name="user" class="cn.itcast.bean.User" init-method="init" destroy-method="destory" ></bean>
 
-	<bean name="user2" class="cn.itcast.b_create.UserFactory" factory-method="createUser"></bean>
-
-	<!-- 创建方式3：实例工厂创建,调用UserFactory对象的createUser2创建对象。
-	-->
-
-	<bean name="user3" class="cn.itcast.b_create.UserFactory"  factory-bean="userFactory" factory-method="createUser2" ></bean>
-
-	<bean name="userFactory" class="cn.itcast.b_create.UserFactory"></bean>
+	<!-- 导入其他spring配置文件-->
+	<import resource="cn/itcast/b_create/applicationContext.xml" />
 	
 </beans>

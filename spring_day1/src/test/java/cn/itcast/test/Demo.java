@@ -8,17 +8,19 @@ import org.springframework.context.support.ClassPathXmlApplicationContext;
 public class Demo {
     @Test
     public void fun1() {
-        ApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
+        ClassPathXmlApplicationContext ac = new ClassPathXmlApplicationContext("applicationContext.xml");
         User user = (User) ac.getBean("user");
         user.setAge(12);
         user.setName("aaa");
         System.out.println(user);
 
-        User user2 = (User) ac.getBean("user");
+        //User user2 = (User) ac.getBean("user");
 
-        User user3 = (User) ac.getBean("user");
+        //User user3 = (User) ac.getBean("user");
 
-        System.out.println( user2 == user3);
+        //System.out.println( user2 == user3);
+        //容器销毁方法
+        ac.close();
 
     }
 
@@ -38,6 +40,14 @@ public class Demo {
         User user = (User) ac.getBean("user3");
         user.setAge(12);
         user.setName("aaa");
+        System.out.println(user);
+
+    }
+
+    @Test
+    public void fun4() {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("cn/itcast/injection/applicationContext.xml");
+        User user = (User) ac.getBean("user");
         System.out.println(user);
 
     }

@@ -9,6 +9,33 @@ public class User {
 
     private String name;
     private Integer age;
+    private Car car;
+
+    public Car getCar() {
+        return car;
+    }
+
+    public User(String name, Car car) {
+        System.out.println("构造函数注入name,car");
+        this.name = name;
+        this.car = car;
+    }
+
+    public User(Integer name, Car car) {
+        System.out.println("构造函数注入name,car");
+        this.name = name+"";
+        this.car = car;
+    }
+
+    public User( Car car,String name) {
+        System.out.println("构造函数注入car,name");
+        this.name = name;
+        this.car = car;
+    }
+
+    public void setCar(Car car) {
+        this.car = car;
+    }
 
     public String getName() {
         return name;
@@ -36,7 +63,10 @@ public class User {
 
     @Override
     public String toString() {
-        return "User [name=" + name + ", age=" + age + "]";
+        return "User{" +
+                "name='" + name + '\'' +
+                ", age=" + age +
+                ", car.name=" + car.getName() +
+                '}';
     }
-
 }

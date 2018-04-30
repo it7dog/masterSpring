@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	   xmlns="http://www.springframework.org/schema/beans"
+	   xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd ">
+
+	<!-- set 方式注入
+	-->
+	<bean  name="user" class="cn.itcast.bean.User" >
+		<property name="name" value="tom"></property>
+		<property name="age" value="18"></property>
+	</bean>
+	
+</beans>
