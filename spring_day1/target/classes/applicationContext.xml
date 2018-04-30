@@ -14,5 +14,6 @@
 			结论: 尽量使用name属性.
 	  -->
 	<bean  name="user" class="cn.itcast.bean.User" ></bean>
+
 	
 </beans>

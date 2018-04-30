@@ -14,5 +14,32 @@ public class Demo {
         user.setName("aaa");
         System.out.println(user);
 
+        User user2 = (User) ac.getBean("user");
+
+        User user3 = (User) ac.getBean("user");
+
+        System.out.println( user2 == user3);
+
     }
+
+    @Test
+    public void fun2() {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("cn/itcast/b_create/applicationContext.xml");
+        User user = (User) ac.getBean("user2");
+        user.setAge(12);
+        user.setName("aaa");
+        System.out.println(user);
+
+    }
+
+    @Test
+    public void fun3() {
+        ApplicationContext ac = new ClassPathXmlApplicationContext("cn/itcast/b_create/applicationContext.xml");
+        User user = (User) ac.getBean("user3");
+        user.setAge(12);
+        user.setName("aaa");
+        System.out.println(user);
+
+    }
+
 }
