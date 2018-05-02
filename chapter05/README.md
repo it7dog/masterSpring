@@ -737,3 +737,20 @@ public LogonService logonService(){
 进行"改造"（AOP增强），将对Bean生命周期管理的逻辑植入进来。所以，在调用daoConfig.logDao()及daoConfig.userDao()方法时，不是简单的
 执行DaoConfig类中定义的方法逻辑，而是从Spring容器中返回相应的bean。换句话说，多次调用daoConfig.logDao()返回的都是Spring容器中相同
 的Bean。可以用@Scope("prototype")标注，这样每次调用daoConfig.logDao()都会返回一个新的logDao Bean。
+
+##### 对标注注解的支持
+
+* @Resource  
+* @Inject  
+这两个标注注解和@Autowired注解功用类似，都是对类变更及方法入参提供自动注入功能。@Resource
+注解要求提供一个Bean名称属性，如果属性为空，则自动采用标注处的变量名或方法名作为Bean的名称。
+```
+public class Boss {
+ private Car car;
+ @Resource("car")
+ private void setCar(Car car){
+  System.out.println("execute in setCar");
+  this.car=car
+ }
+}
+```
