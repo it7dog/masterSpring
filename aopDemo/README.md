@@ -58,3 +58,14 @@ void cn.itcast.service.UserServiceImpl.save()
 * cn.itcast.service..*ServiceImpl.*(..) 
 ```
 
+##### AOP 面向切面编程思想
+
+横向重复代码，纵向抽取。  
+
+###### 动态代理
+1.通过动态代理可以体现aop思想  
+2.对象目标对象的方法进行增强。  
+
+###### spring aop开发  
+spring封装了动态代理代码，我们不需要手写动态代理代码。  
+还封装了cglib代理。  
