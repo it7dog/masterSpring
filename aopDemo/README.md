@@ -69,3 +69,7 @@ void cn.itcast.service.UserServiceImpl.save()
 ###### spring aop开发  
 spring封装了动态代理代码，我们不需要手写动态代理代码。  
 还封装了cglib代理。  
+
+##### 注解配置
+
+
