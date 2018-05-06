@@ -79,3 +79,35 @@ spring封装了动态代理代码，我们不需要手写动态代理代码。
 * 环绕增强 在目标方法执行前后实施增强
 * 异常抛出增强 在目标方法抛出异常后实施增强
 * 引介增强 在目标类中添加一些新的方法和属性。  
+
+##### execution()  
+ execution()是最常用的切点函数，其语法如下： 
+ execution(<修饰符模式>?<返回类型模式><方法名模式>(<参数模式>) <异常模式>?)  
+ 1.通过方法签名定义切点  
+ execution(public * *(..)):匹配所有目标类的public方法，第一个\*代表返回值类型；第二个\*代表
+ 方法名；而..代表任意入参的方法。    
+ execution(* *To(..)):匹配目标类所有以To为后缀的方法，第一个\*代表返回类型；而\*To代表任意以To
+ 为后缀的方法。  
+ 2.通过类定义切点  
+ execution(\* com.smart.Waiter.\*(..)):匹配Waiter接口的所有方法，第一个\*代表返回任意类型；
+ com.smart.Waiter.\*代表Waiter接口中的所有方法。  
+ execution(\* com.smart.Waiter+.\*(..)):匹配Waiter接口及其所有实现类的方法。  
+ 3.通过类包定义切点  
+ 在类名模式串中,".\*"表示包下所有的类，而"..\*"表示包、子孙包下的所有类。  
+ execution(\* com.smart.\*(..))：匹配com.smart包下所有类的所有方法。  
+ execution(\* com.smart..\*(..)):匹配com.smart包、子孙包下所有类的的所有方法。  
+ execution(\* com..\*.\*Dao.find\*(..)):匹配包名前缀为com的任何包下类名后缀为Dao的方法，方法名
+ 必须以find为前缀。  
+ 4.通过方法入参定义切点  
+ 可以使用\*和..通配符。其中\*表示任意类型的参数;而..表示任意类型的参数且参数个数不限。  
+ execution(\* joke(String,int))：匹配joke(String,int)方法，且joke方法的第一个入参是String,
+ 第二个入参是int。  
+ execution(\* joke(String,\*))：匹配目标类中的joke()方法，该方法第一个参数类型为String，第二个
+ 可以是任意类型。  
+ execution(\*joke(String,..)):匹配目标类中的joke()方法，该方法第一个入参为String，后面可以
+ 有任意个入参且入参类型不限。  
+ executuon(\*joke(Object+)):匹配目标类中的joke()方法，方法拥有一个入参，且入参是Object类型或者
+ 该类的子类。  
+ 
+ 
+ 
