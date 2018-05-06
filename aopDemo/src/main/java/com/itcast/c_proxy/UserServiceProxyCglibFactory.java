@@ -2,7 +2,6 @@ package com.itcast.c_proxy;
 
 import com.itcast.service.UserService;
 import com.itcast.service.impl.UserServiceImpl;
-import org.springframework.cglib.proxy.Callback;
 import org.springframework.cglib.proxy.Enhancer;
 import org.springframework.cglib.proxy.MethodInterceptor;
 import org.springframework.cglib.proxy.MethodProxy;

@@ -46,3 +46,15 @@ pring 中提供@Component 的三个衍生注解:(功能目前来讲是一致的)
 * Proxy(代理):将通知织入到目标对象之后，形成的代理对象。  
 
 * Aspect(切面)：切入点+通知  
+
+##### 配置切入点  
+
+```
+public void cn.itcast.service.UserServiceImpl.save()  
+void cn.itcast.service.UserServiceImpl.save()  
+* cn.itcast.service.UserServiceImpl.save() 
+* cn.itcast.service.UserServiceImpl.*() 
+* cn.itcast.service.*ServiceImpl.*(..) 
+* cn.itcast.service..*ServiceImpl.*(..) 
+```
+
