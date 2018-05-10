@@ -108,6 +108,20 @@ spring封装了动态代理代码，我们不需要手写动态代理代码。
  有任意个入参且入参类型不限。  
  executuon(\*joke(Object+)):匹配目标类中的joke()方法，方法拥有一个入参，且入参是Object类型或者
  该类的子类。  
+ ##### args()和@args()  
+ 1.args() 接收一个类名，表示目标类方法入参对象是指类（包含子类）时，切点匹配：
+ args(com.smart.Waiter)表示运行时入参时Waiter类型的方法，它和execution(* *(com.smart.Waiter))的区别在于
+ 后者时针对方法的签名而言的，而前者则针对运行时入参类型而言。  
+ 2.@args() 接收一个注解类的类名，当方法的运行时入参对象标注了指定的注解时，匹配切点。  
+ ##### within()  
+ 通过类匹配模式串声明切点，within()函数定义的连接点针对目标类而言的，而非针对运行其对象而言。within()所指定的连接点
+ 最小范围只能是类。within(<类匹配模式>)
+ >> within(com.smart.NaiveWaiter):匹配目标类NaiveWaiter的所有方法。  
+ within(com.smart.\*)匹配com.smart包中的所有类，但不包括子孙类。  
+ within(com.smart..\*)匹配com.smart包及子孙包中的类，所以com.smart.service、com.smart.dao、
+ 及com.smart.service.fourn等包中所有类的方法都匹配这个切点。  
  
- 
+ ##### target()和this() 
+ 1.target(M)表示如果目标类按类型匹配于M，则目标类的所有方法都匹配切点。  
+ target(com.smart.Waiter):NaiveWaiter、NaughtyWaiter及CuteNaiveWaiter的所有方法都匹配切点
  
