@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="springJDBC:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="springJDBC-1.0-SNAPSHOT.war">
+      <element id="artifact" artifact-name="springJDBC:war exploded" />
+    </root>
+  </artifact>
+</component>
