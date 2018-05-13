@@ -42,7 +42,7 @@ public class Demo {
   @Test
   public void fun2(){
     User u = new User();
-    u.setUserName("james");
+    u.setUserName("roy");
     u.setPassword("123456");
     userDao.save(u);
   }
