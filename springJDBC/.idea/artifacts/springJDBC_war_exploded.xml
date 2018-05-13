@@ -37,6 +37,7 @@
           <element id="library" level="project" name="Maven: mysql:mysql-connector-java:5.1.38" />
           <element id="library" level="project" name="Maven: com.mchange:c3p0:0.9.5.2" />
           <element id="library" level="project" name="Maven: com.mchange:mchange-commons-java:0.2.11" />
+          <element id="library" level="project" name="Maven: org.aspectj:aspectjweaver:1.6.12" />
         </element>
       </element>
       <element id="directory" name="META-INF">

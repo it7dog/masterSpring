@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--suppress SpringFacetInspection -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 指定spring读取db.properties配置-->
+    <context:property-placeholder location="db.properties"/>
+    <!-- 事务通知配置-->
+    <tx:advice  id="txAdvice" transaction-manager="dataSourceTransactionManager">
+        <tx:attributes>
+            <!--
+                isolation="DEFAULT" 隔离级别
+                propagation="REQUIRED" 传播行为
+                read-only="false" 只读
+                timeout="-1" 过期时间
+                rollback-for="" -Exception
+                no-rollback-for="" +Exception
+            -->
+            <tx:method name="transfer" isolation="REPEATABLE_READ" propagation="REQUIRED" read-only="false"/>
+        </tx:attributes>
+    </tx:advice>
+
+    <!-- 配置织入-->
+    <aop:config >
+        <!-- 切点-->
+        <aop:pointcut id="txPc" expression="execution(* com.smart.spring.service.*ServiceImpl.*(..))"/>
+        <!-- 配置切面-->
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPc"/>
+    </aop:config>
+
+    <!-- 事务核心管理器，封装了所有事务操作，依赖与链接池 -->
+    <bean name="dataSourceTransactionManager" class=" org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"></property>
+    </bean>
+    <!-- 事务模板对象-->
+    <bean name="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+        <property name="transactionManager" ref="dataSourceTransactionManager"></property>
+    </bean>
+    <!-- 配置事务通知-->
+
+    <!--1.将链接池放入spring容器中 -->
+    <bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource" destroy-method="close"
+          p:driverClass="${jdbc.driverClass}"
+          p:jdbcUrl="${jdbc.jdbcUrl}"
+          p:user="${jdbc.user}"
+          p:password="${jdbc.password}"/>
+
+    <!--2.将accountDao放入spring容器中-->
+    <bean name="accountDao" class="com.smart.spring.jdbc.dao.AccountDaoImpl">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--3.将accountService放入spring容器中-->
+    <bean name="accountService" class="com.smart.spring.service.AccountServiceImpl">
+        <property name="accountDao" ref="accountDao"/>
+        <property name="tt" ref="transactionTemplate" />
+    </bean>
+
+</beans>
