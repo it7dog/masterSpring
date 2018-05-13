@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!--1.将链接池放入spring容器中 -->
+    <bean name="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+        <property name="driverClass" value="com.mysql.jdbc.Driver"/>
+        <property name="jdbcUrl" value="jdbc:mysql://localhost:3306/sampledb"/>
+        <property name="user" value="root"/>
+        <property name="password" value="123456" />
+    </bean>
+    <!-- 2.将JDBCTemplate放入spring容器中-->
+    <bean name="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <!--3.将UserDao放入spring容器中-->
+    <bean name="userDao" class="com.smart.spring.jdbc.dao.UserDaoImpl">
+        <!--<property name="jt" ref="jdbcTemplate" />-->
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+</beans>
