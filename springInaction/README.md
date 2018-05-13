@@ -18,3 +18,20 @@
 
 ##### 通过java代码装配 bean  
 在自动化配置的方式行不通，因此需要明确配置Spring(想要将第三方库中组件装配进来)，javaConfig是更好的方案。  
+
+c-命名空间是在spring3.0中引入的，它是在xml中更为简洁的描述构造器参数的方式。
+```
+<bean id="cdPlayer" class="soundsystem.CDPlayer" c:cd-ref="compactDisc" />
+<bean id="cdPlayer" class="soundsystem.CDPlayer" c:_0-ref="compactDisc" />    
+```
+##### 导入和混合配置
+可以将JavaConfig的组件扫描和自动装配和／或XML配置混合在一起。  
+```
+@Configuration
+@Import(CDPlayerConfig.class)
+@ImportResource("classpath:cd-config.xml")
+public class SoundSystemConfig{
+}
+```
+在JavaConfig配置中，可以使用@Import和@ImportResource来拆分JavaConfig类。在XMl中，我们可以使用<import>元素来拆分XML配置。
+
