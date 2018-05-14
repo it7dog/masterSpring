@@ -60,3 +60,4 @@ Spring管理事务方式：
 SpringAop事务通知  
 
 开启注解配置
+@Transaction

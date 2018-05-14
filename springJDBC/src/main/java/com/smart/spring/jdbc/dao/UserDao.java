@@ -5,9 +5,11 @@ import com.smart.spring.bean.User;
 import java.util.List;
 
 public interface UserDao {
-  //增
+  /** 增
+   * @param u 用户
+   * */
   void save(User u);
-  //删
+  /* 删 */
   void delete(int id);
   //改
   void update(User u);
