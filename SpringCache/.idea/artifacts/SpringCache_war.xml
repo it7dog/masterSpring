@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="SpringCache:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="SpringCache.war">
+      <element id="artifact" artifact-name="SpringCache:war exploded" />
+    </root>
+  </artifact>
+</component>
