@@ -9,8 +9,5 @@
         <module name="SpringQuartz" />
       </profile>
     </annotationProcessing>
-    <bytecodeTargetLevel>
-      <module name="SpringQuartz" target="1.5" />
-    </bytecodeTargetLevel>
   </component>
 </project>
