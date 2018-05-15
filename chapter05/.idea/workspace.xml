@@ -47,8 +47,8 @@
         <entry file="file://$PROJECT_DIR$/README.md">
           <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
             <state split_layout="SPLIT">
-              <first_editor relative-caret-position="228">
-                <caret line="726" column="51" lean-forward="true" selection-start-line="726" selection-start-column="51" selection-end-line="726" selection-end-column="51" />
+              <first_editor relative-caret-position="354">
+                <caret line="735" column="48" lean-forward="false" selection-start-line="735" selection-start-column="48" selection-end-line="735" selection-end-column="48" />
                 <folding />
               </first_editor>
               <second_editor />
@@ -120,7 +120,7 @@
   <component name="MavenRunner">
     <option name="skipTests" value="true" />
   </component>
-  <component name="ProjectFrameBounds" extendedState="1">
+  <component name="ProjectFrameBounds">
     <option name="y" value="23" />
     <option name="width" value="1440" />
     <option name="height" value="825" />
@@ -282,15 +282,15 @@
       <workItem from="1524058459430" duration="4833000" />
       <workItem from="1524140101248" duration="7030000" />
       <workItem from="1524378700171" duration="3009000" />
-      <workItem from="1525267767657" duration="451000" />
+      <workItem from="1525267767657" duration="546000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="50605000" />
+    <option name="totallyTimeSpent" value="50700000" />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="23" width="1440" height="825" extended-state="1" />
+    <frame x="0" y="23" width="1440" height="825" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -829,8 +829,8 @@
     <entry file="file://$PROJECT_DIR$/README.md">
       <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
         <state split_layout="SPLIT">
-          <first_editor relative-caret-position="228">
-            <caret line="726" column="51" lean-forward="true" selection-start-line="726" selection-start-column="51" selection-end-line="726" selection-end-column="51" />
+          <first_editor relative-caret-position="354">
+            <caret line="735" column="48" lean-forward="false" selection-start-line="735" selection-start-column="48" selection-end-line="735" selection-end-column="48" />
             <folding />
           </first_editor>
           <second_editor />

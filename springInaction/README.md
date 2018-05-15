@@ -33,5 +33,9 @@ c-命名空间是在spring3.0中引入的，它是在xml中更为简洁的描述
 public class SoundSystemConfig{
 }
 ```
-在JavaConfig配置中，可以使用@Import和@ImportResource来拆分JavaConfig类。在XMl中，我们可以使用<import>元素来拆分XML配置。
+在JavaConfig配置中，可以使用@Import和@ImportResource来拆分JavaConfig类。
+在XMl中，我们可以使用<import>元素来拆分XML配置。
+```
+<import resource="cdplayer-config.xml" />
+```
 
